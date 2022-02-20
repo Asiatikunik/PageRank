@@ -17,6 +17,10 @@ main.o: main.c $(HEAD)
 PageRank.o: PageRank.c $(HEAD)
 	$(CC) -o $@ -c $< $(CFLAGS)
 
+script: clean
+	gnuplot -c resultat/script_damping_temps.gp resultat/damping_temps.txt > resultat/png/damping_temps.png
+	gnuplot -c resultat/script_damping_NbExecution.gp resultat/damping_NbExecution.txt > resultat/png/damping_NbExecution.png
+
 valgrind: clean $(EXEC) $(OBJ)
 	#     valgrind ./$(EXEC)
 	#     valgrind --tool=memcheck --leak-check=full ./$(EXEC)

@@ -17,6 +17,9 @@ int main() {
 		recordDampingTemps(i, resultat);
 		recordDampingNbExecution(i, resultat);
 	}
+
+
+	// resultat = calculeVecteur(transition, 0.85);
 	freeTransition(transition);
 
 	return 0;

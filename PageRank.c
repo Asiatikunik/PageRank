@@ -41,7 +41,6 @@ Transition creeMatriceTransition() {
 
 
     trans = mettreLaDivision(trans);
-    // afficherMatrice(trans);
     printf("Lecture du fichier done\n\n");
 	return trans;
 }
@@ -123,6 +122,7 @@ Resultat calculeVecteur(Transition t, double dumping) {
 	double temps;
 	clock_t t1, t2;
 	Resultat returned;
+	VecteurSort* vs = NULL;
 
 	t1 = clock();
 	while(!flag) {
@@ -152,10 +152,14 @@ Resultat calculeVecteur(Transition t, double dumping) {
 	returned.temps = temps;
 	returned.nbExecution = iteration;
 
+	vs = sortVecteur(vecteur);
+	recordClassementPage(vs, dumping);
+
 	free(vecteurResult);
 	free(vecteur);
 	free(vecteurGout);
 	free(vecteurPrec);
+	free(vs);
 	return returned;
 }
 
@@ -241,18 +245,66 @@ void afficherVecteur(double* vecteurResult){
 	printf("\n\n");
 }
 
+VecteurSort* sortVecteur(double* v) {
+	VecteurSort* vs = (VecteurSort*) calloc(NB_NOEUD, sizeof(VecteurSort));
+	bool flag = false;
+
+	for(int i=0; i<NB_NOEUD; i++) {
+		vs[i].val = v[i];
+		vs[i].indice = i;
+	}
+
+	while(!flag) {
+		flag = true;
+		for(int i=0; i<NB_NOEUD-1; i++) {
+			if (vs[i].val < vs[i+1].val) {
+				vs = swapVecteurSort(vs, i, i+1);
+				flag = false;
+			}
+		}
+	}
+
+	return vs;
+}
+
+VecteurSort* swapVecteurSort(VecteurSort* vs, int a, int b) {
+	VecteurSort tmp;
+
+	tmp.indice = vs[a].indice;
+	tmp.val = vs[a].val;
+
+	vs[a].indice = vs[b].indice;
+	vs[a].val = vs[b].val;
+
+	vs[b].indice = tmp.indice;
+	vs[b].val = tmp.val;
+
+	return vs;
+}
+
+void afficherVecteurSort(VecteurSort* vs) {
+	for(int i=0; i<NB_NOEUD; i++) {
+		printf("%d %1.3f\n", vs[i].indice, vs[i].val);
+	}
+	printf("\n\n");
+}
+
+
 void clearFile(){
 
-	FILE *file1 = NULL;
-	FILE *file2 = NULL;
+	FILE *file = NULL;
 
-	if (file1 = fopen("resultat/damping_temps.txt", "r")) {
-	    fclose(file1);
+	if (file = fopen("resultat/damping_temps.txt", "r")) {
+	    fclose(file);
 		system("rm resultat/damping_temps.txt");
 	}
-	if (file2 = fopen("resultat/damping_NbExecution.txt", "r")) {
-	    fclose(file2);
+	if (file = fopen("resultat/damping_NbExecution.txt", "r")) {
+	    fclose(file);
 		system("rm resultat/damping_NbExecution.txt");
+	}
+	if (file = fopen("resultat/classementPage.txt", "r")) {
+	    fclose(file);
+		system("rm resultat/classementPage.txt");
 	}
 }
 
@@ -275,5 +327,21 @@ void recordDampingNbExecution(double dumping, Resultat result) {
         exit(1);
     }
     fprintf(f, "%1.2f %d\n", dumping, (int) result.nbExecution);
+    fclose(f);
+}
+
+void recordClassementPage(VecteurSort* vs, double dumping) {
+    FILE *f = NULL;
+    f = fopen("resultat/classementPage.txt", "a");
+    if (f==NULL) {
+        printf("Error open file for record\n");
+        exit(1);
+    }
+
+    fprintf(f, "Avec %1.2f dumping\n", dumping);
+    for(int i=0; i<NB_NOEUD; i++) {
+		fprintf(f, "%d %1.10f\n", vs[i].indice, vs[i].val);
+    }
+    fprintf(f, "\n\n");
     fclose(f);
 }

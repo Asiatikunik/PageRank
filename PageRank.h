@@ -7,11 +7,16 @@
 #define true 1
 #define false 0
 
-#define TOLERENCE 0.000000000000000000001
+#define TOLERENCE 0.00000000000000000001
+// #define TOLERENCE 0.00001
 
 #define DATA_PATH "doc/facebook_combined.txt"
 #define NB_NOEUD 4039
 #define NB_ARETE 88234
+
+// #define DATA_PATH "doc/test.txt"
+// #define NB_NOEUD 3
+// #define NB_ARETE 4
 
 typedef struct Matrice {
 	int lig;
@@ -29,6 +34,11 @@ typedef struct Resultat {
 	int nbExecution;
 } Resultat;
 
+typedef struct VecteurSort {
+	double val;
+	int indice;
+} VecteurSort;
+
 Transition creeMatriceTransition();
 Transition mettreLaDivision(Transition t);
 bool checkExiste(Transition t, int var);
@@ -45,11 +55,16 @@ double* additionVecteur(double* a, double* b);
 double* copieVecteur(double* a, double* b);
 double* resetVecteur(double* vecteur);
 bool stop(double* a, double* b);
+
 double* initVecteur(int version, int dumping);
 void afficherVecteur(double* vecteurResult);
+VecteurSort* sortVecteur(double* v);
+VecteurSort* swapVecteurSort(VecteurSort* vs, int a, int b);
+void afficherVecteurSort(VecteurSort* vs);
 
 void clearFile();
 void recordDampingTemps(double dumping, Resultat result);
 void recordDampingNbExecution(double dumping, Resultat result);
+void recordClassementPage(VecteurSort* vs, double dumping);
 
 #endif

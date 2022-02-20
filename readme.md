@@ -6,8 +6,9 @@ Taper simplement "make" pour exécuter le programme
 
 # Information complémentaire
 Dans le dossier doc, se trouve les graphes.
-Dans le dossier resultat, se trouve les résultats des l'exécution
-Dans le dossier resultat/png se trouve les graphes gnuplot
+Dans le dossier resultat, se trouve les résultats des l'exécution.
+Dans le dossier resultat/png se trouve les graphes gnuplot.
+On peut trouvé le classement des pages en fonction de leurs importances dans resultat/classementPage.txt
 
 # Afin d'avoir les gnuplot
 Taper simplement "make script"

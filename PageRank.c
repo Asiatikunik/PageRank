@@ -70,10 +70,6 @@ Transition initTransition() {
 	Transition trans;
 	trans.m = (Matrice*) calloc(NB_ARETE, sizeof(Matrice));
 	trans.nbVal = (int*) calloc(NB_NOEUD, sizeof(int));
-
-	// trans.m = (Matrice*) malloc(NB_ARETE * sizeof(Matrice));
-	// trans.nbVal = (int*) malloc(NB_NOEUD * sizeof(int));
-
 	return trans;
 }
 
@@ -131,7 +127,6 @@ Resultat calculeVecteur(Transition t, double dumping) {
 	t1 = clock();
 	while(!flag) {
 		t1 = clock();
-		// printf("Iteration numéro %d\n", iteration);
 		// Partie de gauche
 		vecteurResult = multiplicationMatriceVecteur(t, vecteur, vecteurResult);
 		vecteurResult = multiplicationVecteurConstante(t, vecteurResult, dumping);
@@ -148,7 +143,6 @@ Resultat calculeVecteur(Transition t, double dumping) {
 		iteration++;
 		vecteurResult = resetVecteur(vecteurResult);
 	}
-	// afficherVecteur(vecteur);
 
 	t2 = clock();
 	temps = (double) (t2-t1)/CLOCKS_PER_SEC;
@@ -158,8 +152,6 @@ Resultat calculeVecteur(Transition t, double dumping) {
 	returned.temps = temps;
 	returned.nbExecution = iteration;
 
-
-	// vecteurResult = resetVecteur(vecteurResult);
 	free(vecteurResult);
 	free(vecteur);
 	free(vecteurGout);
@@ -208,17 +200,11 @@ bool stop(double* a, double* b) {
 	double puissance = 2.0;
 
 	for(int i=0; i<NB_NOEUD; i++) {
-		// printf("%f - %f\n", a[i], b[i]);
 		tmp = fabs(a[i]-b[i]);
-		// printf("puissance: (%2.80f) \n", tmp);
 		tmp = pow(tmp, puissance);
-		// printf("tmp: %2.80f\n\n", tmp);
 		result += tmp;
 	}
-
 	result = sqrt(result);
-	// printf("result: %5.60f\n\n", result);
-	
 	if(result < TOLERENCE) {
 		return true;
 	}

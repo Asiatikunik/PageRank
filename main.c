@@ -6,7 +6,7 @@
 #include "PageRank.h"
 
 int main() {
-	// system("clear");
+	system("clear");
 	printf("*** PageRank ***\n");
 	clearFile();
 	Resultat resultat;

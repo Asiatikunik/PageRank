@@ -7,24 +7,11 @@
 #define true 1
 #define false 0
 
-#define DUMPING 0.85
-// #define JUMPING 0.15
-#define JUMPING 1-DUMPING
-
-#define TOLERENCE 0.0000000000001
+#define TOLERENCE 0.000000000000000000001
 
 #define DATA_PATH "doc/facebook_combined.txt"
 #define NB_NOEUD 4039
 #define NB_ARETE 88234
-
-// #define DATA_PATH "doc/facebook_combined_short.txt"
-// #define NB_NOEUD 1010
-// #define NB_ARETE 15739
-
-// #define DATA_PATH "doc/test.txt"
-// #define NB_NOEUD 3
-// #define NB_ARETE 4
-
 
 typedef struct Matrice {
 	int lig;
